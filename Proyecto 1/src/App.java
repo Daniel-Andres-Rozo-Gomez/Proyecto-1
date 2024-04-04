@@ -148,7 +148,19 @@ public static void Registro_cliente(cliente cliente, Scanner scanner){
     System.out.print("Digite el año: ");
     String año = scanner.nextLine();
     cliente.setFechaDeCreacion(dia + "/" + mes + "/" + año);
-    System.out.print("El cliente ha sido creado y añadido a la lista de clientes correctamente.");
+    System.out.println("El cliente ha sido creado y añadido a la lista de clientes correctamente.");
+}
+
+public static void Continuar(ArrayList<cliente> listaDeclientes, Scanner scanner){
+    System.out.println("¿Desea realizar alguna otra función en el programa?");
+    System.out.print("Digite 0 para no y 1 para si: ");
+    byte seleccion = scanner.nextByte();
+    scanner.nextLine();
+    System.out.println();
+    if (seleccion == 1){
+        byte eleccion = Opciones(scanner);
+        Estructura_de_elecciones(listaDeclientes, eleccion, scanner);
+    }
 }
 
     public static byte Opciones(Scanner scanner){
@@ -170,39 +182,53 @@ public static void Estructura_de_elecciones(ArrayList<cliente> listaDeclientes, 
     cliente clientepordefecto = new cliente();
     switch (eleccion) {
         case 1:
-
+        cliente nuevo_cliente = new cliente();
+        Registro_cliente(nuevo_cliente, scanner);
+        listaDeclientes.add(nuevo_cliente);
+        Continuar(listaDeclientes, scanner);
             break;
     
         case 2:
         if (listaDeclientes.size() == 0){
+            System.out.println("No hay clientes registrados en el sistema, se le movera a la función de registro de cliente.");
             Registro_cliente(clientepordefecto, scanner);
             listaDeclientes.add(clientepordefecto);
         }
         BuscarYAñadirDinero(listaDeclientes, scanner);
-
+        Continuar(listaDeclientes, scanner);
             break;
         
         case 3:
         if (listaDeclientes.size() == 0){
+            System.out.println("No hay clientes registrados en el sistema, se le movera a la función de registro de cliente.");
             Registro_cliente(clientepordefecto, scanner);
             listaDeclientes.add(clientepordefecto);
         }
         BuscarYEliminarDinero(listaDeclientes, scanner);
-
+        Continuar(listaDeclientes, scanner);
         
             break;
 
         case 4:
         if (listaDeclientes.size() == 0){
+            System.out.println("No hay clientes registrados en el sistema, se le movera a la función de registro de cliente.");
             Registro_cliente(clientepordefecto, scanner);
             listaDeclientes.add(clientepordefecto);
         }
         Buscarcliente(listaDeclientes, scanner);
-
+        Continuar(listaDeclientes, scanner);
             break;
         
         case 5:
-
+        for (cliente clientefor:listaDeclientes){
+            System.out.println("Nombre: " + clientefor.getNombre());
+            System.out.println("Cedula: " + clientefor.getCedula());
+            System.out.println("Dinero ahorrado: " + clientefor.getDinero_ahorrado());
+            System.out.println("Nivel de ingresos: " + clientefor.getNivelIngresos());
+            System.out.println("Fecha de creacion: " + clientefor.getFechaDeCreacion());
+            System.out.println();
+        }
+        Continuar(listaDeclientes, scanner);
             break;
         
         default:
