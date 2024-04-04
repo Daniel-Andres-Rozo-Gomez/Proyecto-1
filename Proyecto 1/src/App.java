@@ -11,7 +11,6 @@ public static void Insertar_dinero(cliente cliente, Scanner scanner){
     long nuevo_monto = scanner.nextLong();
     scanner.nextLine();
     cliente.setDinero_ahorrado(cliente.getDinero_ahorrado() + nuevo_monto);
-    System.out.println();
     System.out.println("La cantidad de dinero ahorrado actualmente es de: " + cliente.getDinero_ahorrado());
     Establecer_nivel_de_ingresos(cliente);
 }
@@ -70,7 +69,6 @@ public static void Eliminar_dinero(cliente cliente, Scanner scanner){
     long monto_a_eliminar = scanner.nextLong();
     scanner.nextLine();
     cliente.setDinero_ahorrado(cliente.getDinero_ahorrado() - monto_a_eliminar);
-    System.out.println();
     System.out.println("La cantidad de dinero ahorrado actualmente es de: " + cliente.getDinero_ahorrado());
 }
 
@@ -163,6 +161,137 @@ public static void Continuar(ArrayList<cliente> listaDeclientes, Scanner scanner
     }
 }
 
+public static void Prestamos(ArrayList<cliente> listaDeclientes, Scanner scanner){
+    byte contador = 0;
+    System.out.print("Digite el nombre de la persona que busca: ");
+    String nombre_a_buscar = scanner.nextLine();
+    for (cliente clientefor:listaDeclientes){
+        if ((clientefor.getNombre().equals(nombre_a_buscar))){
+            contador = (byte)(contador + 1);
+        }
+    }
+    if (contador > 1){
+        System.out.print("Se encontro más de un cliente con el mismo nombre, por favor digite la cedula del cliente que busca: ");
+        int cedula_a_buscar = scanner.nextInt();
+        scanner.nextLine();
+        for (cliente clientefor:listaDeclientes){
+            if (clientefor.getCedula() == cedula_a_buscar){
+                System.out.print("Digite el monto que quiere pedir prestado: ");
+                long prestamo = scanner.nextLong();
+                scanner.nextLine();
+                long doble_saldo_actual = clientefor.getDinero_ahorrado()*2;
+                long interes = (long)(prestamo * 0.2);
+                long cuota = (long)((clientefor.getDinero_ahorrado()/6)+interes);
+                if (prestamo <= clientefor.getDinero_ahorrado()){
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()+ prestamo);
+                    System.out.println("Su prestamo ha sido realizado correctamente, el valor actual del dinero en su cuenta es de: " + clientefor.getDinero_ahorrado());
+                    System.out.println("El valor de su cuota mensual es de: " + cuota);
+                }
+                else if (prestamo < doble_saldo_actual){
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()+ prestamo);
+                    System.out.println("Su prestamo ha sido realizado correctamente, el valor actual del dinero en su cuenta es de: " + clientefor.getDinero_ahorrado());
+                    System.out.println("El valor de su cuota mensual es de: " + cuota);
+                }
+                else {
+                    System.out.println("La cantidad pedida no cumple con nuestras condiciones, el prestamo ha sido denegado.");
+                }
+                }
+            }
+        }
+    
+    else {
+        for (cliente clientefor:listaDeclientes){
+            if ((clientefor.getNombre().equals(nombre_a_buscar))){
+                System.out.print("Digite el monto que quiere pedir prestado: ");
+                long prestamo = scanner.nextLong();
+                scanner.nextLine();
+                long doble_saldo_actual = clientefor.getDinero_ahorrado()*2;
+                long interes = (long)(prestamo * 0.2);
+                long cuota = (long)((clientefor.getDinero_ahorrado()/6)+interes);
+                if (prestamo <= clientefor.getDinero_ahorrado()){
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()+ prestamo);
+                    System.out.println("Su prestamo ha sido realizado correctamente, el valor actual del dinero en su cuenta es de: " + clientefor.getDinero_ahorrado());
+                    System.out.println("El valor de su cuota mensual es de: " + cuota);
+                }
+                else if (prestamo < doble_saldo_actual){
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()+ prestamo);
+                    System.out.println("Su prestamo ha sido realizado correctamente, el valor actual del dinero en su cuenta es de: " + clientefor.getDinero_ahorrado());
+                    System.out.println("El valor de su cuota mensual es de: " + cuota);
+                }
+                else {
+                    System.out.println("La cantidad pedida no cumple con nuestras condiciones, el prestamo ha sido denegado.");
+                }
+            }
+        }
+    }
+}
+
+public static void CDT(ArrayList<cliente> listaDeclientes, Scanner scanner){
+    byte contador = 0;
+    System.out.print("Digite el nombre de la persona que busca: ");
+    String nombre_a_buscar = scanner.nextLine();
+    for (cliente clientefor:listaDeclientes){
+        if ((clientefor.getNombre().equals(nombre_a_buscar))){
+            contador = (byte)(contador + 1);
+        }
+    }
+    if (contador > 1){
+        System.out.print("Se encontro más de un cliente con el mismo nombre, por favor digite la cedula del cliente que busca: ");
+        int cedula_a_buscar = scanner.nextInt();
+        scanner.nextLine();
+        for (cliente clientefor:listaDeclientes){
+            if (clientefor.getCedula() == cedula_a_buscar){
+                System.out.print("Digite cuanto dinero desea invertir: ");
+                long inversion = scanner.nextInt();
+                scanner.nextLine();
+                clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()-inversion);
+                System.out.print("Digite a cuanto plazo desea realizar la inversión (3 0 6 meses): ");
+                byte plazo = scanner.nextByte();
+                scanner.nextLine();
+                if (plazo == 3){
+                    long interes = (long)((inversion * (0.03))*(0.25000027397));
+                    System.out.println("Las ganancias de su inversión en el plazo seleccionado seran de: " + interes );
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado() + (inversion + interes));
+                    System.err.println("Su saldo después de la inversión paso a ser de: " + clientefor.getDinero_ahorrado());
+                }
+                else if (plazo == 6){
+                    long interes = (long)((inversion * (0.05))*(0.5));
+                    System.out.println("Las ganancias de su inversión en el plazo seleccionado seran de: " + interes );
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado() + (inversion + interes));
+                    System.err.println("Su saldo después de la inversión paso a ser de: " + clientefor.getDinero_ahorrado());
+                }
+                }
+            }
+        }
+    
+    else {
+        for (cliente clientefor:listaDeclientes){
+            if ((clientefor.getNombre().equals(nombre_a_buscar))){
+                System.out.print("Digite cuanto dinero desea invertir: ");
+                long inversion = scanner.nextInt();
+                scanner.nextLine();
+                clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado()-inversion);
+                System.out.print("Digite a cuanto plazo desea realizar la inversión (3 0 6 meses): ");
+                byte plazo = scanner.nextByte();
+                scanner.nextLine();
+                if (plazo == 3){
+                    long interes = (long)((inversion * (0.03))*(0.25000027397));
+                    System.out.println("Las ganancias de su inversión en el plazo seleccionado seran de: " + interes );
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado() + (inversion + interes));
+                    System.err.println("Su saldo después de la inversión paso a ser de: " + clientefor.getDinero_ahorrado());
+                }
+                else if (plazo == 6){
+                    long interes = (long)((inversion * (0.05))*(0.5));
+                    System.out.println("Las ganancias de su inversión en el plazo seleccionado seran de: " + interes );
+                    clientefor.setDinero_ahorrado(clientefor.getDinero_ahorrado() + (inversion + interes));
+                    System.err.println("Su saldo después de la inversión paso a ser de: " + clientefor.getDinero_ahorrado());
+                }
+            }
+        }
+    }
+
+}
+
     public static byte Opciones(Scanner scanner){
     System.out.println("Opciones: ");
     System.out.println("1. Crear cliente");
@@ -170,6 +299,8 @@ public static void Continuar(ArrayList<cliente> listaDeclientes, Scanner scanner
     System.out.println("3. Eliminar dinero ahorrado");
     System.out.println("4. Buscar cliente por nombre y ver su ahorro");
     System.out.println("5. Listar todos los clientes");
+    System.out.println("6. Hacer un prestamo");
+    System.out.println("7. Hacer un CDT");
     System.out.println("6. Salir");
 
     System.out.print("Seleccione la opción que desee: ");
@@ -230,7 +361,24 @@ public static void Estructura_de_elecciones(ArrayList<cliente> listaDeclientes, 
         }
         Continuar(listaDeclientes, scanner);
             break;
-        
+        case 6:
+        if (listaDeclientes.size() == 0){
+            System.out.println("No hay clientes registrados en el sistema, se le movera a la función de registro de cliente.");
+            Registro_cliente(clientepordefecto, scanner);
+            listaDeclientes.add(clientepordefecto);
+        }
+        Prestamos(listaDeclientes, scanner);
+        Continuar(listaDeclientes, scanner);
+            break;
+        case 7:
+        if (listaDeclientes.size() == 0){
+            System.out.println("No hay clientes registrados en el sistema, se le movera a la función de registro de cliente.");
+            Registro_cliente(clientepordefecto, scanner);
+            listaDeclientes.add(clientepordefecto);
+        }
+        CDT(listaDeclientes, scanner);
+        Continuar(listaDeclientes, scanner);
+            break;
         default:
             break;
     }
